@@ -109,9 +109,9 @@ class ToDoListViewController: UITableViewController {
         
     }
     
-    func loadItems() {
+    func loadItems(request: NSFetchRequest<Item> = Item.fetchRequest()) {
+        // Item.fetchRequest() is default value if no parameter is given
         
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
         do{
        itemArray = try context.fetch(request)
         } catch {
@@ -129,7 +129,14 @@ extension ToDoListViewController: UISearchBarDelegate {
         let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         request.predicate = predicate
         let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
-        request.sortDescriptors = 
+        request.sortDescriptors = [sortDescriptor]
+        loadItems(request: request)
+        
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+        }
     }
     
     
