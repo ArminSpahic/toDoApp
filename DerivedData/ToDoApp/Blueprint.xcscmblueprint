@@ -1,0 +1,23 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "D3F67ACA162D50E441E9D6515B3411F54E75B212",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "D3F67ACA162D50E441E9D6515B3411F54E75B212" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "30503FFD-FDD3-427F-8E03-2CB19010BBDD",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "D3F67ACA162D50E441E9D6515B3411F54E75B212" : "ToDoApp\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ToDoApp",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ToDoApp.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ArminSpahic\/ToDoApp.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D3F67ACA162D50E441E9D6515B3411F54E75B212"
+    }
+  ]
+}
