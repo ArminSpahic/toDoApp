@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class ToDoListViewController: SwipeTableViewController {
     @IBOutlet weak var searchBar: UISearchBar!
@@ -20,6 +21,7 @@ class ToDoListViewController: SwipeTableViewController {
         }
     }
     
+    
     let defaults = UserDefaults.standard
     //let dataPathFile = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
@@ -28,6 +30,37 @@ class ToDoListViewController: SwipeTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        tableView.separatorStyle = .none
+        
+        
+    }
+        
+    override func viewWillAppear(_ animated: Bool) {
+        
+         guard let colorHex = selectedCategory?.color else {fatalError()}
+                title = selectedCategory?.name
+        updateNavBar(hexCode: colorHex)
+        
+            
+        
+        }
+    func updateNavBar(hexCode: String) {
+       
+        guard let navBar = navigationController?.navigationBar else {fatalError("Navigation bar doesnt exist")}
+        guard let navBarColor = UIColor(hexString: hexCode) else {fatalError()}
+        navBar.barTintColor = navBarColor
+        navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
+        navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor:  ContrastColorOf(navBarColor, returnFlat: true) ]
+        searchBar.barTintColor = navBarColor
+        
+    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        guard let originalColor = UIColor(hexString: "1D9BF6") else {fatalError()}
+//        navigationController?.navigationBar.barTintColor = originalColor
+//        navigationController?.navigationBar.tintColor = FlatWhite()
+//        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: FlatWhite()]
+//    }
+    
         
       
        // print(dataPathFile)
@@ -37,7 +70,7 @@ class ToDoListViewController: SwipeTableViewController {
 //        }
         
         // Do any additional setup after loading the view, typically from a nib.
-    }
+    
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemResults?.count ?? 1
@@ -49,6 +82,11 @@ class ToDoListViewController: SwipeTableViewController {
         if let item = itemResults?[indexPath.row] {
             
             cell.textLabel?.text = item.title
+            if let color = UIColor(hexString: selectedCategory!.color)?.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(itemResults!.count)) {
+                cell.backgroundColor = color
+                cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
+            }
+            
             
             if item.done == true{
                 cell.accessoryType = .checkmark
