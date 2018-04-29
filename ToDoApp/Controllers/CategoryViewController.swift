@@ -40,11 +40,12 @@ class CategoryViewController: SwipeTableViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         if let category = categories?[indexPath.row] {
             cell.textLabel?.text = category.name ?? "No categories added yet"
-            cell.backgroundColor = UIColor(hexString: category.color ?? "1D9BF6")
-            if let bColor = cell.backgroundColor {
-             cell.textLabel?.textColor = ContrastColorOf(bColor, returnFlat: true)
+            guard let color = UIColor(hexString: category.color) else {fatalError()}
+            cell.backgroundColor = color
             
-            }}
+             cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
+            
+            }
         
         return cell
     }
@@ -101,7 +102,9 @@ class CategoryViewController: SwipeTableViewController {
         }
     }
     
-    
+    @objc func alertClose(gesture: UITapGestureRecognizer) {
+        self.dismiss(animated: true, completion: nil)
+    }
    
     @IBAction func addBtnPressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
@@ -119,10 +122,17 @@ class CategoryViewController: SwipeTableViewController {
             textField = categoryTextField
             categoryTextField.placeholder = "Add new category"
         }
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: {
         
+            alert.view.superview?.isUserInteractionEnabled = true
+            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertClose(gesture:))))
+             
+        })
+        
+        
+        }
     }
     
     
-}
+
 

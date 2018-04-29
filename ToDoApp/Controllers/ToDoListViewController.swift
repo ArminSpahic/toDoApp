@@ -132,7 +132,9 @@ class ToDoListViewController: SwipeTableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-
+    @objc func alertClose(gesture: UITapGestureRecognizer) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func addItemBtn(_ sender: UIBarButtonItem) {
         var textField = UITextField()
@@ -171,7 +173,12 @@ class ToDoListViewController: SwipeTableViewController {
         }
         alert.addAction(action)
         
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion:{
+            
+            alert.view.superview?.isUserInteractionEnabled = true
+            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertClose(gesture:))))
+            
+        })
         
         
     }
